@@ -12,16 +12,16 @@ namespace Nilead\MenuBundle\Provider;
 
 
 use Doctrine\ORM\EntityManager;
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
-use Nilead\MenuBundle\Model\MenuInterface;
+use Nilead\MenuBundle\Builder\MenuBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class MenuProvider implements MenuProviderInterface
 {
     /**
-     * @var FactoryInterface
+     * @var MenuBuilder
      */
-    protected $factory = null;
+    protected $builder = null;
 
     /**
      * @var EntityManager
@@ -30,12 +30,12 @@ class MenuProvider implements MenuProviderInterface
 
 
     /**
-     * @param FactoryInterface $factory the menu factory used to create the menu item
+     * @param MenuBuilder $builder
      * @param EntityManager $entityManager
      */
-    public function __construct(FactoryInterface $factory, EntityManager $entityManager)
+    public function __construct(MenuBuilder $builder, EntityManager $entityManager)
     {
-        $this->factory = $factory;
+        $this->builder = $builder;
         $this->entityManager = $entityManager;
     }
 
@@ -48,7 +48,7 @@ class MenuProvider implements MenuProviderInterface
             throw new \LogicException(sprintf('The menu "%s" doesn\'t exists. Check where you created the menu to be sure it returns an existed menu.', $name));
         }
 
-        $menu = $this->factory->createFromNode($result);
+        $menu = $this->builder->build($result);
 
         return $menu;
     }

@@ -11,8 +11,8 @@
 namespace Nilead\MenuBundle\Renderer;
 
 
-use Knp\Menu\Renderer\ListRenderer;
+use Knp\Menu\Renderer\TwigRenderer;
 
-class MenuRenderer extends ListRenderer
+class MenuRenderer extends TwigRenderer
 {
 }
