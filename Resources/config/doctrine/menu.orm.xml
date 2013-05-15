@@ -1,0 +1,44 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="Nilead\MenuBundle\Entity\Menu" table="menu">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="name" column="name" type="string" length="100"/>
+
+        <field name="lft" column="lft" type="integer">
+            <gedmo:tree-left/>
+        </field>
+
+        <field name="rgt" column="rgt" type="integer">
+            <gedmo:tree-right/>
+        </field>
+
+        <field name="root" type="integer" nullable="true">
+            <gedmo:tree-root/>
+        </field>
+
+        <field name="lvl" column="lvl" type="integer">
+            <gedmo:tree-level/>
+        </field>
+
+        <field name="options" column="options" type="array"/>
+
+        <one-to-many field="children" target-entity="Menu" mapped-by="parent">
+            <order-by>
+                <order-by-field name="lft" direction="ASC"/>
+            </order-by>
+        </one-to-many>
+
+        <many-to-one field="parent" target-entity="Menu" inversed-by="children">
+            <join-column name="parent_id" referenced-column-name="id" on-delete="CASCADE"/>
+            <gedmo:tree-parent/>
+        </many-to-one>
+
+        <gedmo:tree type="nested"/>
+
+    </entity>
+
+</doctrine-mapping>

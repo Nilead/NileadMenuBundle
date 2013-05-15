@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nilead_menu.menu_item.class">Knp\Menu\MenuItem</parameter>
+        <parameter key="nilead_menu.provider.class">Nilead\MenuBundle\Provider\MenuProvider</parameter>
+        <parameter key="nilead_menu.renderer.class">Nilead\MenuBundle\Renderer\MenuRenderer</parameter>
+        <parameter key="nilead_menu.helper.class">Nilead\MenuBundle\Twig\Helper</parameter>
+    </parameters>
+
+    <services>
+        <service id="nilead_menu.provider" class="%nilead_menu.provider.class%">
+            <argument type="service" id="knp_menu.factory"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="nilead_menu.renderer" class="%nilead_menu.renderer.class%">
+            <argument type="service" id="knp_menu.matcher"/>
+        </service>
+
+        <service id="nilead_menu.helper" class="%nilead_menu.helper.class%">
+            <argument type="service" id="nilead_menu.renderer"/>
+            <argument type="service" id="nilead_menu.provider"/>
+        </service>
+    </services>
+
+</container>

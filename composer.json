@@ -1,0 +1,35 @@
+{
+    "name": "nilead/menu-bundle",
+    "type": "symfony-bundle",
+    "description": "The \"Nilead Menu Bundle\"",
+    "authors": [
+        {
+            "name": "Tuan Nguyen",
+            "email": "tuannguyen@rubikin.com",
+            "homepage": "http://rubikin.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.*",
+        "knplabs/knp-menu-bundle": "2.0.*@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Nilead\\MenuBundle": "" }
+    },
+    "target-dir": "Nilead/MenuBundle",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.0-dev"
+        }
+    }
+}
