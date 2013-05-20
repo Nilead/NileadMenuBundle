@@ -6,16 +6,17 @@
 
     <parameters>
         <parameter key="nilead_menu.menu_item.class">Knp\Menu\MenuItem</parameter>
-        <parameter key="nilead_menu.provider.class">Nilead\MenuBundle\Provider\MenuProvider</parameter>
+        <parameter key="nilead_menu.menu_manager.class">Nilead\MenuBundle\MenuManager</parameter>
         <parameter key="nilead_menu.renderer.class">Nilead\MenuBundle\Renderer\MenuRenderer</parameter>
         <parameter key="nilead_menu.helper.class">Nilead\MenuBundle\Twig\Helper</parameter>
         <parameter key="nilead_menu.builder.class">Nilead\MenuBundle\Builder\MenuBuilder</parameter>
     </parameters>
 
     <services>
-        <service id="nilead_menu.provider" class="%nilead_menu.provider.class%">
+        <service id="nilead_menu.menu_manager" class="%nilead_menu.menu_manager.class%">
             <argument type="service" id="nilead_menu.builder"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
         </service>
 
         <service id="nilead_menu.renderer" class="%nilead_menu.renderer.class%">
@@ -29,7 +30,7 @@
 
         <service id="nilead_menu.helper" class="%nilead_menu.helper.class%">
             <argument type="service" id="knp_menu.renderer.twig"/>
-            <argument type="service" id="nilead_menu.provider"/>
+            <argument type="service" id="nilead_menu.menu_manager"/>
         </service>
     </services>
 
