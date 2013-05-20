@@ -27,11 +27,10 @@ class MenuBuilder
 
     }
 
-    public function build($item)
+    public function build($item, array $options = array())
     {
         $menu = $this->factory->createFromNode($item);
         $this->dispatcher->dispatch('nilead_menu.menu_configure.' . $item->getName(), new ConfigureMenuEvent($this->factory, $menu));
-
 
         return $menu;
     }
