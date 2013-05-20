@@ -14,26 +14,28 @@ namespace Nilead\MenuBundle\Twig;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
 use Knp\Menu\Renderer\RendererProviderInterface;
+use Nilead\MenuBundle\ManagerInterface;
+use Nilead\MenuBundle\MenuManager;
 
 class Helper
 {
     private $renderer;
-    private $menuProvider;
+    private $manager;
 
     /**
      * @param $renderer
-     * @param MenuProviderInterface|null $menuProvider
+     * @param ManagerInterface $manager
      */
-    public function __construct($renderer, MenuProviderInterface $menuProvider = null)
+    public function __construct($renderer, ManagerInterface $manager = null)
     {
         $this->renderer = $renderer;
-        $this->menuProvider = $menuProvider;
+        $this->manager = $manager;
     }
 
     public function get($menu, array $path = array(), array $options = array())
     {
         $menuName = $menu;
-        $menu = $this->menuProvider->get($menuName, $options);
+        $menu = $this->manager->get($menuName, $options);
 
         if (!$menu instanceof ItemInterface) {
             throw new \LogicException(sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));
