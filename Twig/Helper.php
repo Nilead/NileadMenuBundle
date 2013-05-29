@@ -32,9 +32,8 @@ class Helper
         $this->manager = $manager;
     }
 
-    public function get($menu, array $path = array(), array $options = array())
+    public function get($menuName, array $path = array(), array $options = array())
     {
-        $menuName = $menu;
         $menu = $this->manager->get($menuName, $options);
 
         if (!$menu instanceof ItemInterface) {
@@ -44,9 +43,9 @@ class Helper
         return $menu;
     }
 
-    public function render($menu, array $options = array(), $renderer = null)
+    public function render($menuName, array $options = array(), $renderer = null)
     {
-        $menu = $this->get($menu);
+        $menu = $this->get($menuName);
 
         return $this->renderer->render($menu, $options);
     }
