@@ -12,6 +12,7 @@ namespace Nilead\MenuBundle\Builder;
 
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\NodeInterface;
 use Nilead\CoreBundle\Event\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -30,6 +31,7 @@ class MenuBuilder
     public function build($item, array $options = array())
     {
         $menu = $this->factory->createFromNode($item);
+
         $this->dispatcher->dispatch('nilead_menu.menu_configure.' . $item->getName(), new ConfigureMenuEvent($this->factory, $menu));
 
         return $menu;

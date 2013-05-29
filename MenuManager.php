@@ -53,7 +53,8 @@ class MenuManager implements ManagerInterface
             throw new \LogicException(sprintf('The menu "%s" doesn\'t exists. Check where you created the menu to be sure it returns an existed menu.', $name));
         }
 
-        $menu = $this->builder->build($this->menus[$name], $options);
+        //  TODO: Kiem tra lai o day
+        $menu = $this->menus[$name];
 
         return $menu;
     }
