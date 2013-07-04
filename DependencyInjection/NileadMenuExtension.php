@@ -26,6 +26,16 @@ class NileadMenuExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
+        $container->setParameter(
+            'nilead_menu.renderer.twig.template',
+            $config['twig']['template']
+        );
+
+        $container->setParameter(
+            'nilead_menu.renderer.twig.options',
+            $config['options']
+        );
+
         if (isset($config['twig'])) {
             $loader->load('twig.xml');
         }

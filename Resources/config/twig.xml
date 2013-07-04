@@ -5,6 +5,7 @@
 
     <services>
         <service id="nilead_menu.twig.extension" class="Nilead\MenuBundle\Twig\MenuExtension">
+            <argument type="service" id="service_container" />
             <argument type="service" id="nilead_menu.helper"/>
             <tag name="twig.extension" />
         </service>

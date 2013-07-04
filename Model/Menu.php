@@ -104,4 +104,9 @@ class Menu implements MenuInterface
     {
         return count($this->children) > 0;
     }
+
+    public function isRoot()
+    {
+        return $this->root;
+    }
 }

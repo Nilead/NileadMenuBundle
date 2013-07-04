@@ -12,13 +12,17 @@ namespace Nilead\MenuBundle\Twig;
 
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MenuExtension extends \Twig_Extension
 {
+    protected $container;
+
     protected $helper;
 
-    public function __construct(Helper $helper)
+    public function __construct(ContainerInterface $container, Helper $helper)
     {
+        $this->container = $container;
         $this->helper = $helper;
     }
 
@@ -26,12 +30,18 @@ class MenuExtension extends \Twig_Extension
     {
         return array(
             'nilead_menu_render' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
+            'nilead_menu_master' => new \Twig_Function_Method($this, 'masterCategory'),
         );
     }
 
     public function render($menuName, array $options = array())
     {
         return $this->helper->render($menuName, $options);
+    }
+
+    public function masterCategory($category)
+    {
+        return $this->container->get('nilead.manager.menu')->getMaster($category->getName());
     }
 
     public function getName()
