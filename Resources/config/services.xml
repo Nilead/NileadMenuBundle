@@ -16,11 +16,15 @@
         <service id="nilead_menu.menu_manager" class="%nilead_menu.menu_manager.class%">
             <argument type="service" id="nilead_menu.builder"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+            <!--<tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>-->
         </service>
 
         <service id="nilead_menu.renderer" class="%nilead_menu.renderer.class%">
+            <argument type="service" id="router"/>
+            <argument type="service" id="twig"/>
+            <argument>%nilead_menu.renderer.twig.template%</argument>
             <argument type="service" id="knp_menu.matcher"/>
+            <argument>%nilead_menu.renderer.twig.options%</argument>
         </service>
 
         <service id="nilead_menu.builder" class="%nilead_menu.builder.class%">
@@ -29,8 +33,13 @@
         </service>
 
         <service id="nilead_menu.helper" class="%nilead_menu.helper.class%">
-            <argument type="service" id="knp_menu.renderer.twig"/>
+            <argument type="service" id="nilead_menu.renderer"/>
             <argument type="service" id="nilead_menu.menu_manager"/>
+        </service>
+
+        <service id="nilead_menu.voter.request" class="Nilead\MenuBundle\Matcher\Voter\RequestVoter">
+            <argument type="service" id="request" on-invalid="null" strict="false"/>
+            <tag name="knp_menu.voter"/>
         </service>
     </services>
 

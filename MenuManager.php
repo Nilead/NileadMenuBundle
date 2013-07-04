@@ -29,32 +29,34 @@ class MenuManager implements ManagerInterface
         $this->entityManager = $entityManager;
     }
 
-    public function boot()
-    {
-        if (true === $this->booted) {
-            return;
-        }
-
-        //  TODO:   Load cache
-        $result = $this->entityManager->getRepository('NileadMenuBundle:Menu')->findByLvl(0);
-
-        if (!empty($result)) {
-            foreach ($result as $object) {
-                $this->menus[$object->getName()] = $this->builder->build($object);
-            }
-        }
-
-        $this->booted = true;
-    }
+//    public function boot()
+//    {
+//        if (true === $this->booted) {
+//            return;
+//        }
+//
+//        //  TODO:   Load cache
+//        $result = $this->entityManager->getRepository('NileadMenuBundle:Menu')->findByLvl(0);
+//
+//        if (!empty($result)) {
+//            foreach ($result as $object) {
+//                $this->menus[$object->getName()] = $this->builder->build($object);
+//            }
+//        }
+//
+//        $this->booted = true;
+//    }
 
     public function get($name, array $options = array())
     {
-        if (!$this->has($name)) {
-            throw new \LogicException(sprintf('The menu "%s" doesn\'t exists. Check where you created the menu to be sure it returns an existed menu.', $name));
-        }
+//        if (!$this->has($name)) {
+//            throw new \LogicException(sprintf('The menu "%s" doesn\'t exists. Check where you created the menu to be sure it returns an existed menu.', $name));
+//        }
 
         //  TODO: Kiem tra lai o day
-        $menu = $this->menus[$name];
+//        $menu = $this->menus[$name];
+        $result = $this->entityManager->getRepository('NileadMenuBundle:Menu')->findOneByName($name);
+        $menu = $this->builder->build($result);
 
         return $menu;
     }
@@ -64,8 +66,8 @@ class MenuManager implements ManagerInterface
         return array_key_exists($name, $this->menus);
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
-    {
-        $this->boot();
-    }
+//    public function onKernelRequest(GetResponseEvent $event)
+//    {
+//        $this->boot();
+//    }
 }
